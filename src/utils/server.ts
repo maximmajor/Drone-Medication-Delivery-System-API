@@ -3,6 +3,8 @@ import cors from 'cors';
 import morgan from 'morgan';
 import bodyParser from 'body-parser';
 import { errorHandler, notFoundHandler } from '../middlewares/errorHandlers';
+import droneRoutes from '../routes/droneRoute'
+import medicationRoutes from '../routes/medicationRoute'
 
 
 
@@ -23,6 +25,9 @@ function createServer() {
 
 
     // use routes
+     // use routes
+     app.use('/drone', droneRoutes);
+     app.use('/medication', medicationRoutes);
    
 
 

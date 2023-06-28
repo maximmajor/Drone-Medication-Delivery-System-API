@@ -1,6 +1,8 @@
 import { Sequelize } from 'sequelize-typescript';
-import { Drone } from '../models/droneModel';
-import { Medication } from '../models/MedicationModel';
+import  {Drone}  from '../models/droneModel';
+import  {Medication}  from '../models/medicationModel';
+import {Activity} from '../models/activityModel';
+
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -12,6 +14,6 @@ const sequelize = new Sequelize(process.env.DB_NAME!, process.env.DB_USERNAME! ,
 
 
 
-sequelize.addModels([Drone, Medication]);
+sequelize.addModels([Drone, Medication, Activity]);
 
 export default sequelize;
