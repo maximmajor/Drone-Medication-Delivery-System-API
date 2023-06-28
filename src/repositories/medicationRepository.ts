@@ -13,8 +13,17 @@ class MedicationRepository {
     return Medication.create(data);
   }
 
-  public async update(medication: Medication, updates: Partial<Medication>): Promise<Medication> {
-    return medication.update(updates);
+  public async update(id: Medication, updates: Partial<Medication>): Promise<Medication | null> {
+    const [numRowsAffected, updatedMedication] = await Medication.update(updates, {
+      where: { id },
+      returning: true,
+    });
+  
+    if (numRowsAffected === 0) {
+      return null; // Drone not found
+    }
+  
+    return updatedMedication[0];
   }
 
   public async delete(id: string): Promise<boolean> {

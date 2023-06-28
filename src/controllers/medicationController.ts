@@ -9,7 +9,7 @@ class MedicationController {
     this.medicationService = new MedicationService();
   }
 
-  public async createMedication(req: Request, res: Response): Promise<void> {
+  public createMedication =  async  (req: Request, res: Response): Promise<void> => {
     try {
       const medicationData: Medication = req.body;
       console.log(medicationData)
@@ -20,7 +20,7 @@ class MedicationController {
     }
   }
 
-  public async getMedicationById(req: Request, res: Response): Promise<void> {
+  public getMedicationById =  async (req: Request, res: Response): Promise<void> => {
     try {
       const medicationId: string = req.params.id;
       const medication = await this.medicationService.getMedicationById(medicationId);
@@ -34,7 +34,7 @@ class MedicationController {
     }
   }
 
-  public async getAllMedications(req: Request, res: Response): Promise<void> {
+  public getAllMedications =  async (req: Request, res: Response): Promise<void> => {
     try {
       const medications = await this.medicationService.getAllMedications();
       res.json(medications);
@@ -43,7 +43,7 @@ class MedicationController {
     }
   }
 
-  public async updateMedication(req: Request, res: Response): Promise<void> {
+  public updateMedication =  async (req: Request, res: Response): Promise<void> => {
     try {
       const medicationId: any = req.params.id;
       const medicationData: Medication = req.body;
@@ -58,7 +58,7 @@ class MedicationController {
     }
   }
 
-  public async deleteMedication(req: Request, res: Response): Promise<void> {
+  public deleteMedication =  async (req: Request, res: Response): Promise<void> => {
     try {
       const medicationId: string = req.params.id;
       const deleted = await this.medicationService.deleteMedication(medicationId);
