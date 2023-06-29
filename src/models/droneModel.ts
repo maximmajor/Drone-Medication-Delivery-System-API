@@ -14,6 +14,9 @@ export class Drone extends Model<Drone> {
   @Column({ type: DataType.FLOAT })
   batteryCapacity!: number;
 
+  @Column({ type: DataType.FLOAT, defaultValue: 0})
+  WeightOfLoadAdded!: number;
+
   @Column({ type: DataType.ENUM('IDLE', 'LOADING', 'LOADED', 'DELIVERING', 'DELIVERED', 'RETURNING') })
   state!: string;
 

@@ -9,6 +9,15 @@ class MedicationRepository {
     return Medication.findByPk(id);
   }
 
+  public async findByMedicationIds(medicationIds: string): Promise<Medication[] | null> {
+    const getMedications = await Medication.findAll({
+      where: { id: medicationIds },
+    });
+    return getMedications
+
+  }
+
+
   public async create(data: Medication): Promise<Medication> {
     return Medication.create(data);
   }

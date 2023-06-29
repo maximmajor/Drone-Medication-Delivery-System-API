@@ -1,4 +1,4 @@
-import  {Drone}  from '../models/droneModel';
+import { Drone } from '../models/droneModel';
 
 class droneRepository {
   public Drone = Drone;
@@ -23,11 +23,11 @@ class droneRepository {
       where: { id },
       returning: true,
     });
-  
+
     if (numRowsAffected === 0) {
       return null; // Drone not found
     }
-  
+
     return updatedDrones[0];
   }
 

@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import { errorHandler, notFoundHandler } from '../middlewares/errorHandlers';
 import droneRoutes from '../routes/droneRoute'
 import medicationRoutes from '../routes/medicationRoute'
+import activityRoutes from '../routes/activityRoute'
 
 
 
@@ -28,6 +29,7 @@ function createServer() {
      // use routes
      app.use('/drone', droneRoutes);
      app.use('/medication', medicationRoutes);
+     app.use('/activity', activityRoutes);
    
 
 

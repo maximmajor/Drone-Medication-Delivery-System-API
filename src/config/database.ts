@@ -13,7 +13,6 @@ const sequelize = new Sequelize(process.env.DB_NAME!, process.env.DB_USERNAME! ,
 });
 
 
-
 sequelize.addModels([Drone, Medication, Activity]);
 
 export default sequelize;
