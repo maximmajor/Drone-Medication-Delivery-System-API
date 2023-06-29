@@ -1,4 +1,7 @@
+import { Op } from 'sequelize';
 import { Medication } from '../models/medicationModel';
+import sequelize from 'sequelize/types/sequelize';
+
 
 class MedicationRepository {
   public async findAll(): Promise<Medication[]> {
@@ -15,6 +18,8 @@ class MedicationRepository {
     });
     return getMedications
   }
+
+
 
   public async findByCode(code: string): Promise<Medication[] | null> {
     const getDrone = await Medication.findAll({

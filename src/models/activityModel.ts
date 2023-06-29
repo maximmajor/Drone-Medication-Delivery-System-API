@@ -1,7 +1,12 @@
-import { Table, Column, Model, DataType, ForeignKey, BelongsTo, BelongsToMany } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, ForeignKey, BelongsTo, BelongsToMany, BeforeSave } from 'sequelize-typescript';
 import { Drone } from './droneModel';
 import { Medication } from './medicationModel';
 
+interface MedicationItem {
+  itemName: string;
+  code: string;
+  weight: number;
+}
 @Table
 export class Activity extends Model<Activity> {
   @Column({ type: DataType.STRING, allowNull: false })
@@ -32,6 +37,10 @@ export class Activity extends Model<Activity> {
 
   @BelongsTo(() => Drone)
   drone!: Drone;
+
+  @Column({ type: DataType.ARRAY(DataType.JSONB) })
+  MedicationItems!: MedicationItem[];
+
 
   @BelongsToMany(() => Medication, 'ActivityMedications', 'activityId', 'medicationId')
   medications!: Medication[];

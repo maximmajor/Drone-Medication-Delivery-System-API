@@ -14,9 +14,8 @@ class ActivityRepository {
   }
 
   public async create(data: any): Promise<Activity> {
-    console.log("ours")
     const activity = await Activity.create(data);
-    return  activity
+    return activity
   }
 
   public async update(id: Activity, updates: Partial<Activity>): Promise<Activity | null> {
@@ -26,13 +25,38 @@ class ActivityRepository {
       where: { id },
       returning: true,
     });
-  
+
     if (numRowsAffected === 0) {
       return null; // Drone not found
     }
-  
+
     return updatedActivity[0];
   }
+
+
+  // Find the drone by ID
+  public async checkMedicationIds(id: any, newItem: any): Promise<Activity | null> {
+    const getMedications = await Activity.findByPk(id);
+    if (getMedications) {
+      // Check if the code already exists in the MedicationItems array
+      const codeExists = getMedications.MedicationItems.some((item) => item.code === newItem.code);
+      if (codeExists) {
+        console.log("Item with the same code already exists in the MedicationItems.");
+      } else {
+        // Push the new item to the MedicationItems array
+        getMedications.MedicationItems.push(newItem);
+        // Save the updated getMedications
+        await getMedications.save();
+        // The MedicationItems array has been updated
+        console.log("Updated MedicationItems array:", getMedications.MedicationItems);
+      }
+    }
+    return getMedications
+  }
+
+
+
+
 
   public async delete(id: string): Promise<boolean> {
     const deletedRows = await Activity.destroy({ where: { id } });
