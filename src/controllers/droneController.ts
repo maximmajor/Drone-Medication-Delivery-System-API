@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
-import  {Drone}  from '../models/droneModel';
-import  droneService from '../services/droneService'
+import { Drone } from '../models/droneModel';
+import droneService from '../services/droneService'
 import { registerDroneSchema } from '../middlewares/joiValidation';
 import { HttpException } from '../middlewares/HttpException';
 console.log(droneService)
- class DroneController {
+class DroneController {
   private DroneService: droneService;
 
   constructor() {
@@ -14,45 +14,57 @@ console.log(droneService)
   public createDrone = async (req: Request, res: Response): Promise<void> => {
     try {
       const { error, value } = registerDroneSchema.validate(req.body);
-    if (error) {
-      res.status(400).json({ error: error.details[0].message });
-      return
-    }
-    //   const droneData = req.body;
-    //  console.log(droneData)
-     const createDrone = await this.DroneService.createDrone(value)
-      console.log("hmmmmm", createDrone)
-      res.json(createDrone);
-    } catch (error: any) {
-
-        res.status(500).json( error.message);
-    
+      if (error) {
+        res.status(400).json({ error: error.details[0].message });
+        return
+      }
+      const createDrone = await this.DroneService.createDrone(value)
+      res.status(200).json(createDrone);
+    } catch (error: unknown) {
+      if (error instanceof HttpException) {
+        const { statusCode, message } = error;
+        res.status(statusCode).json({ message });
+      } else {
+        res.status(500).json({ message: 'Internal Server Error', error: (error as Error).message });
+      }
     }
   }
+
 
   public getDroneById = async (req: Request, res: Response): Promise<void> => {
     try {
       const droneId: string = req.params.id;
       const drone = await this.DroneService.getDroneById(droneId);
       if (drone) {
-        res.json(drone);
+        res.status(200).json(drone);
       } else {
-        res.status(404).json({ error: 'Drone not found' });
+        res.status(404).json({ error: 'Drone does not exist in the database' });
       }
-    } catch (error) {
-      res.status(500).json({ error: 'Internal server error' });
+    } catch (error: unknown) {
+      if (error instanceof HttpException) {
+        const { statusCode, message } = error;
+        res.status(statusCode).json({ message });
+      } else {
+        res.status(500).json({ message: 'Internal Server Error', error: (error as Error).message });
+      }
     }
   }
 
+
   public getAllDrones = async (req: Request, res: Response): Promise<void> => {
     try {
-      console.log("me")
       const drones = await this.DroneService.getAllDrones();
-      res.json(drones);
-    } catch (error) {
-      res.status(500).json({ error: 'Internal server error' });
+      res.status(200).json({ drones });
+    } catch (error: unknown) {
+      if (error instanceof HttpException) {
+        const { statusCode, message } = error;
+        res.status(statusCode).json({ message });
+      } else {
+        res.status(500).json({ message: 'Internal Server Error', error: (error as Error).message });
+      }
     }
   }
+
 
   public updateDrone = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -60,27 +72,56 @@ console.log(droneService)
       const droneData: Drone = req.body;
       const updatedDrone = await this.DroneService.updateDrone(droneId, droneData);
       if (updatedDrone) {
-        res.json(updatedDrone);
+        res.status(200).json(updatedDrone);
       } else {
-        res.status(404).json({ error: 'Drone not found' });
+        res.status(404).json({ error: 'Drone to be Updated not found' });
       }
-    } catch (error: any) {
-      res.status(500).json( error.error)
-       };
-    }
-
-
-    public getDronesByState = async (req: Request, res: Response): Promise<void> => {
-      try {
-       const state: any = req.query.name;
-       console.log(state)
-        const drones = await this.DroneService.findDronesByState(state);
-        res.json(drones);
-      } catch (error) {
-        res.status(500).json({ error: 'Internal server error' });
+    } catch (error: unknown) {
+      if (error instanceof HttpException) {
+        const { statusCode, message } = error;
+        res.status(statusCode).json({ message });
+      } else {
+        res.status(500).json({ message: 'Internal Server Error', error: (error as Error).message });
       }
     }
-  
+  }
+
+
+  public getDronesByState = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const state: any = req.query.name;
+      const drones = await this.DroneService.findDronesByState(state);
+      if (drones.length !== 0) {
+        res.status(200).json(drones);
+      } else {
+        res.status(201).json({ message: `No Available Drones in ${state} state` });
+      }
+    } catch (error: unknown) {
+      if (error instanceof HttpException) {
+        const { statusCode, message } = error;
+        res.status(statusCode).json({ message });
+      } else {
+        res.status(500).json({ message: 'Internal Server Error', error: (error as Error).message });
+      }
+    }
+  }
+
+
+  public getDronesByBatteryLevel = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const level: any = req.query.word;
+      const drones = await this.DroneService.findDronesByBatteryLevel(level);
+      res.status(200).json(drones);
+    } catch (error: unknown) {
+      if (error instanceof HttpException) {
+        const { statusCode, message } = error;
+        res.status(statusCode).json({ message });
+      } else {
+        res.status(500).json({ message: 'Internal Server Error', error: (error as Error).message });
+      }
+    }
+  }
+
 
   public deleteDrone = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -92,7 +133,12 @@ console.log(droneService)
         res.status(404).json({ error: 'Drone not found' });
       }
     } catch (error) {
-      res.status(500).json({ error: 'Internal server error' });
+      if (error instanceof HttpException) {
+        const { statusCode, message } = error;
+        res.status(statusCode).json({ message });
+      } else {
+        res.status(500).json({ message: 'Internal Server Error', error: (error as Error).message });
+      }
     }
   }
 }

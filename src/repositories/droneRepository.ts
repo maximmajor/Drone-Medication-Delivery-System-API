@@ -1,10 +1,10 @@
+import { Op } from 'sequelize';
 import { Drone } from '../models/droneModel';
 
 class droneRepository {
   public Drone = Drone;
 
   public async findAll(): Promise<Drone[]> {
-    console.log(" third");
     return await this.Drone.findAll();
   }
 
@@ -13,9 +13,28 @@ class droneRepository {
   }
 
   public async create(data: Drone): Promise<Drone> {
-    console.log(" third", data);
     const createDrone = await this.Drone.create(data);
     return createDrone
+  }
+
+
+  public async findByModelTypeOrSerialNumber(model: string, serialNumber: string): Promise<Drone | null> {
+    const getDrone = await this.Drone.findOne({
+      where: {
+        [Op.or]: [
+          { model },
+          { serialNumber },
+        ],
+      },
+    });
+    return getDrone
+  }
+
+  public async findBySerialNumber(serialNumber: string): Promise<Drone[] | null> {
+    const getDrone = await this.Drone.findAll({
+      where: { serialNumber },
+    });
+    return getDrone
   }
 
   public async updateDrone(id: string, updates: Partial<Drone>): Promise<Drone | null> {

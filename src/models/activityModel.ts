@@ -13,13 +13,13 @@ export class Activity extends Model<Activity> {
   @Column({ type: DataType.STRING, allowNull: false, defaultValue: "not yet" })
   timeLeft!: string;
 
-  @Column({ type: DataType.FLOAT, defaultValue: 0})
+  @Column({ type: DataType.FLOAT, defaultValue: 0 })
   WeightOfLoadAdded!: number
 
-  @Column({ type: DataType.STRING,  defaultValue: "not yet" })
+  @Column({ type: DataType.STRING, defaultValue: "not yet" })
   timeReached!: string;
 
-  @Column({ type: DataType.STRING,  defaultValue: "not yet" })
+  @Column({ type: DataType.STRING, defaultValue: "not yet" })
   timeReturned!: string;
 
 

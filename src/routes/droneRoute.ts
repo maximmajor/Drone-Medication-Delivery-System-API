@@ -1,5 +1,5 @@
 import express from 'express';
-import  DroneController  from '../controllers/droneController';
+import DroneController from '../controllers/droneController';
 
 const router = express.Router();
 const droneController = new DroneController();
@@ -9,6 +9,7 @@ router.get('/:id', droneController.getDroneById);
 router.get('/', droneController.getAllDrones);
 router.put('/:id', droneController.updateDrone);
 router.get('/by/state', droneController.getDronesByState);
+router.get('/by/level', droneController.getDronesByBatteryLevel);
 router.delete('/:id', droneController.deleteDrone);
 
 export default router;
