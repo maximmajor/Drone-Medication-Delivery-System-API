@@ -3,11 +3,11 @@ In this task, we have a fleet of 10 drones that are capable of carrying devices 
 
 
 # Brief Summary of this Task
-Drones
-Introduction
+Drones:
+Introduction:
 Drones are an innovative and disruptive technology in the transportation field. Similar to how mobile phones revolutionized communication, drones have the potential to transform traditional transportation infrastructure. They are especially valuable for delivering small items to locations with difficult access.
 
-Task Description
+Task Description:
 In this task, we have a fleet of 10 drones that are capable of carrying devices and delivering small loads, specifically medications. Each drone has unique attributes such as a serial number, model, weight limit, battery capacity, and state. Medications are characterized by their name, weight, code, and image.
 
 The goal is to develop a REST API service, known as the dispatch controller, that enables clients to interact with the drones. The API should provide the functionality to register a drone, load medication items onto a drone, check the loaded medication items for a specific drone, view available drones for loading, and check the battery level of a given drone. Design assumptions are allowed.
