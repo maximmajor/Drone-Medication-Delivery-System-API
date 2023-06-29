@@ -132,7 +132,7 @@ class DroneController {
       } else {
         res.status(404).json({ error: 'Drone not found' });
       }
-    } catch (error) {
+    } catch (error: unknown) {
       if (error instanceof HttpException) {
         const { statusCode, message } = error;
         res.status(statusCode).json({ message });

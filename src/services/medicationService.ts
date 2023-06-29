@@ -1,5 +1,6 @@
-import  {Medication}  from '../models/medicationModel';
-import  MedicationRepository  from '../repositories/medicationRepository';
+import { Medication } from '../models/medicationModel';
+import MedicationRepository from '../repositories/medicationRepository';
+import { HttpException } from '../middlewares/HttpException';
 
 class MedicationService {
   private medicationRepository: MedicationRepository;
@@ -8,24 +9,34 @@ class MedicationService {
     this.medicationRepository = new MedicationRepository();
   }
 
-  public async createMedication(data: Medication): Promise<Medication> {
-    return this.medicationRepository.create(data);
+  public async createMedication(data: Medication): Promise<Medication | string> {
+    const { code } = data
+    const getMedication = await this.medicationRepository.findByCode(code);
+    if (getMedication!.length > 0) {
+      return 'code already exist';
+    }
+    const createMedical = await this.medicationRepository.create(data);
+    return createMedical
   }
 
   public async getMedicationById(id: string): Promise<Medication | null> {
-    return this.medicationRepository.findById(id);
+    const getMedication = this.medicationRepository.findById(id);
+    return getMedication
   }
 
   public async getAllMedications(): Promise<Medication[]> {
-    return this.medicationRepository.findAll();
+    const getAllMedication = this.medicationRepository.findAll();
+    return getAllMedication
   }
 
   public async updateMedication(id: Medication, data: Medication): Promise<Medication | null> {
-    return this.medicationRepository.update(id, data);
+    const updateMedication = this.medicationRepository.update(id, data);
+    return updateMedication
   }
 
   public async deleteMedication(id: string): Promise<boolean> {
-    return this.medicationRepository.delete(id);
+    const deleteMedication = this.medicationRepository.delete(id);
+    return deleteMedication
   }
 }
 export default MedicationService

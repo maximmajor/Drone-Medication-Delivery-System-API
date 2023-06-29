@@ -1,4 +1,4 @@
-import  {Medication}  from '../models/medicationModel';
+import { Medication } from '../models/medicationModel';
 
 class MedicationRepository {
   public async findAll(): Promise<Medication[]> {
@@ -14,9 +14,14 @@ class MedicationRepository {
       where: { id: medicationIds },
     });
     return getMedications
-
   }
 
+  public async findByCode(code: string): Promise<Medication[] | null> {
+    const getDrone = await Medication.findAll({
+      where: { code },
+    });
+    return getDrone
+  }
 
   public async create(data: Medication): Promise<Medication> {
     return Medication.create(data);
@@ -27,11 +32,9 @@ class MedicationRepository {
       where: { id },
       returning: true,
     });
-  
     if (numRowsAffected === 0) {
       return null; // Drone not found
     }
-  
     return updatedMedication[0];
   }
 

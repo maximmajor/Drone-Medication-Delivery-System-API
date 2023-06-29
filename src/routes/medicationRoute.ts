@@ -1,5 +1,5 @@
 import express from 'express';
-import  MedicationController  from '../controllers/medicationController';
+import MedicationController from '../controllers/medicationController';
 
 const router = express.Router();
 const medicationController = new MedicationController();

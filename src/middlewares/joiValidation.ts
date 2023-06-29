@@ -9,20 +9,15 @@ const registerDroneSchema = Joi.object({
 });
 
 
-const loadMedicationSchema = Joi.object({
-  droneId: Joi.number().required(),
-  medicationItems: Joi.array().items(
-    Joi.object({
-      name: Joi.string().regex(/^[A-Za-z0-9-_]+$/).required(),
-      weight: Joi.number().required(),
-      code: Joi.string().regex(/^[A-Z0-9_]+$/).required(),
-      image: Joi.string().required(),
-    })
-  ).required(),
+const medicationSchema = Joi.object({
+  name: Joi.string().regex(/^[A-Za-z0-9-_]+$/).required(),
+  weight: Joi.number().required(),
+  code: Joi.string().regex(/^[A-Z0-9_]+$/).required(),
+  image: Joi.string().required(),
 });
 
 
 export {
   registerDroneSchema,
-  loadMedicationSchema,
+  medicationSchema,
 };
