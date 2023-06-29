@@ -136,9 +136,65 @@ or a browser extension. Here are some of the requests:
 }
 
 
+
 3. Get All Activities:
    GET localhost:3000/activity/
-
+   RESPONSE:
+{
+        "id": 6,
+        "location": "Sample Location",
+        "status": "Open",
+        "timeLeft": "not yet",
+        "WeightOfLoadAdded": 500,
+        "timeReached": "not yet",
+        "timeReturned": "not yet",
+        "conveyComment": "Sample Comment",
+        "droneId": 2,
+        "MedicationItems": [
+            {
+                "code": "SE_7",
+                "weight": 50,
+                "itemName": "glucose"
+            },
+            {
+                "code": "SE_17",
+                "weight": 50,
+                "itemName": "glucose"
+            }
+        ],
+        "createdAt": "2023-06-29T12:22:02.571Z",
+        "updatedAt": "2023-06-29T12:38:05.244Z"
+    },
+    {
+        "id": 7,
+        "location": "Sample Location",
+        "status": "Open",
+        "timeLeft": "not yet",
+        "WeightOfLoadAdded": 500,
+        "timeReached": "not yet",
+        "timeReturned": "not yet",
+        "conveyComment": "Sample Comment",
+        "droneId": 3,
+        "MedicationItems": [
+            {
+                "code": "SE_7",
+                "weight": 50,
+                "itemName": "glucose"
+            },
+            {
+                "code": "SE_4",
+                "weight": 50,
+                "itemName": "glucose"
+            },
+            {
+                "code": "SE_6",
+                "weight": 50,
+                "itemName": "glucose"
+            }
+        ],
+        "createdAt": "2023-06-29T12:41:34.343Z",
+        "updatedAt": "2023-06-29T12:42:07.304Z"
+    },
 ```
 
 
